@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "comcan-ctx"
-version = "0.1.2"
+version = "0.1.3"
 description = "Context management for AI coding agents — state awareness + expertise memory."
 authors = [
     {name = "Shriniwas Ramesh Suram"}

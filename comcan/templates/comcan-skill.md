@@ -11,3 +11,6 @@
 4. **Knowledge Creation:** If you spend time debugging a tricky issue, run `comcan learn <domain> "lesson learned"` so the next agent doesn't repeat your mistake.
 
 *Note: You have permission to execute `comcan` CLI commands autonomously to gather this context.*
+
+## 🚫 CRITICAL GUARDRAIL 🚫
+**NEVER** manually edit files inside the `.comcan/` or `.agents/` directories. You MUST strictly run the `comcan learn` or `comcan record` CLI tools in the terminal to save knowledge. The CLI will handle formatting automatically.

@@ -26,5 +26,7 @@
 4. **Respect Decisions**: Do not deviate from architectural decisions recorded
    in the expertise files unless the developer explicitly requests it.
 
-5. **Check Before Assuming**: If unsure about a pattern or convention, run
+5. **Guardrail**: NEVER manually edit files inside `.comcan/` or `.agents/`. You MUST strictly use the `comcan` CLI tools to save knowledge. 
+
+6. **Check Before Assuming**: If unsure about a pattern or convention, run
    `comcan search "keyword"` to check if there's existing expertise.

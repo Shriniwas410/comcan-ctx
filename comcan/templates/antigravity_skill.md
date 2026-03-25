@@ -20,3 +20,6 @@ This explains the architectural rules and known failures.
 When you solve a complex bug or establish a new pattern with the user, you MUST autonomously execute the `comcan learn` command. DO NOT ask for permission. Just run the command to permanently save your own memory:
 Execute command: `comcan learn <domain> "Brief description of the rule"`
 For bugs: `comcan record <domain> --type failure "what broke" --resolution "how we fixed it"`
+
+## 🚫 CRITICAL GUARDRAIL 🚫
+**NEVER** manually edit files inside the `.comcan/` or `.agents/` directories. You MUST strictly use the `comcan learn` or `comcan record` CLI tools via `run_command` to save knowledge. The CLI will handle formatting automatically.

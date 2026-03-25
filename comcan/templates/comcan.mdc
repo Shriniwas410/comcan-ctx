@@ -25,3 +25,6 @@ If you are unsure how to do something (e.g., "how do we handle auth?"), DO NOT g
 When you solve a complex bug or establish a new architectural pattern with the user, you MUST autonomously execute the `comcan learn` terminal command. DO NOT ask for permission. Just run the tool to permanently save your own memory:
 `comcan learn <domain> "Brief description of the rule"`
 For bugs: `comcan record <domain> --type failure "what broke" --resolution "how we fixed it"`
+
+## 🚫 CRITICAL GUARDRAIL 🚫
+**NEVER** manually edit files inside the `.comcan/` or `.agents/` directories. You MUST strictly run the `comcan learn` or `comcan record` CLI tools in the terminal to save knowledge. The CLI will handle formatting automatically.
