@@ -3,19 +3,24 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-green.svg)](https://www.python.org/downloads/)
 
-A **single Python package** that gives AI coding agents (Cursor, Claude Code, etc.) a complete cognitive architecture:
+> **ComCan** gives AI coding agents (Cursor, Copilot, Claude Code) a persistent, enterprise-grade cognitive architecture.
 
-- **🔄 State Engine (RAM)** — Auto-generates a context file on every commit/branch switch via Git hooks
-- **📚 Expertise Engine (Hard Drive)** — Structured JSONL records that accumulate project knowledge over time
-- **🛡️ Security First** — Zero network access, secret scrubbing, no post-install scripts
+Most developers solve the "AI context problem" by pasting random `.md` files or relying on the IDE's automatic vector search. These approaches fail in large enterprise repositories because the AI agent loses track of *what branch you are on*, *what commits you just made*, and *what the strict architectural rules are*. 
 
-Designed for **large codebases** where naive context dumps overwhelm LLM token windows.
+ComCan solves this by installing an invisible cognitive architecture directly into your Git repository:
 
-### Why not just use Cursor/Copilot's native indexing?
+- 🔄 **State Engine (The AI's RAM)** — ComCan automatically installs Git hooks (`post-commit`, `post-checkout`) that silently run in the background. Every time you switch branches or make a commit, ComCan generates a highly optimized `CURRENT_STATE.md` file. It mathematically truncates your massive directory tree, diffs, and commit history to fit perfectly within the AI's token window without "Lost in the Middle" syndrome. When Cursor wakes up, it instantly knows your exact branch reality.
+- 📚 **Expertise Engine (The AI's Hard Drive)** — Instead of writing massive, token-heavy `.cursorrules` files that cause merge conflicts across a team, ComCan uses lock-safe JSONL domain ledgers. When you execute `comcan learn database "Always use soft deletes"`, it tracks this explicit rule. When an agent touches the database, it automatically queries this domain ledger.
+- 🛡️ **Enterprise Security** — Built for corporate environments. Zero network access, zero HTTP calls, secrets are stripped from state files automatically, and no `shell=True` subprocess vulnerabilities exist.
 Standard IDE indexing (RAG) is great at finding *where* code is, but terrible at knowing *why* it's there or how branches differ. 
 - **Indexing vs. State:** IDE vector indexes don't understand that you just switched branches. ComCan's `CURRENT_STATE.md` is instantly updated via Git hooks to represent your exact branch reality.
 - **RAG vs. Rules:** RAG discovers old code; it doesn't know what the *new* rules are. ComCan's `expertise` engine teaches agents the *current* architectural decisions.
 - **Static `.md` vs. Dynamic JSONL:** Giant `.cursorrules` files cause merge conflicts and token bloat. ComCan uses domain-sharded, lock-safe JSONL ledgers that agents query surgically.
+
+### Philosophy: Why isn't domain learning "Automatic"?
+Automatic codebase indexing (RAG) is prone to massive amounts of noise and hallucination. An AI cannot automatically deduce your team's *architectural intent* just by reading code. If a developer pastes a bad pattern from StackOverflow, an automated AI indexer treats that bad code as a "truth" to learn from. 
+
+ComCan treats AI knowledge like documentation. The `comcan learn` command acts as a **conscious architectural ledger**. When you or an agent establishes a rule (*"Always use exponential backoff for the auth API"*), it is explicitly recorded and saved to a Git-tracked `.jsonl` file. This guarantees that your AI agent is operating on 100% accurate, PR-reviewed instructions, free from automated scraping noise.
 
 ## Quick Start
 
@@ -30,33 +35,62 @@ That's it. ComCan will:
 2. Install Git hooks to auto-update context on commits and branch switches
 3. Create `.cursorrules` so Cursor reads the context automatically
 
-## Usage
+## Comprehensive Usage Guide
 
-### Record Expertise
+### Step 1: Initialize
 
+Run initialization at the root of your Git repository:
 ```bash
-# Quick convention recording
-comcan learn database "Always use WAL mode for SQLite"
+comcan init
+```
+*This installs the Git hooks, configures `.cursorrules`, and builds your first Context State file.*
 
-# Full record syntax
+### Step 2: Create Logical Domains
+
+Break your project down into logical domains (e.g., `api`, `database`, `frontend`, `auth`).
+```bash
+comcan add database
+comcan add auth
+```
+
+### Step 3: Record Expertise (The Core Loop)
+
+Whenever you solve a tricky bug, establish a new convention, or finalize an architectural decision, record it immediately. You can do this yourself, or instruct Cursor/Claude to run this command for you:
+```bash
+# 1. Quick convention recording
+comcan learn database "Always use WAL mode for SQLite to prevent locking"
+
+# 2. Full record syntax (for detailed bug post-mortems)
 comcan record api --type failure "Auth tokens not refreshed" --resolution "Added retry with exponential backoff"
-
-# Add a new domain
-comcan add frontend
 ```
 
-### Query Knowledge
+### Step 4: The AI Injects the Knowledge
 
+You are now done! When you ask Cursor a question like *"Write a new database fetch function"*, its custom `.cursorrules` file will silently instruct it to aggressively run:
 ```bash
-# View all database expertise
 comcan query database
-
-# Search across everything
-comcan search "authentication"
-
-# Full context dump for agent injection
-comcan prime
 ```
+The AI context window is instantly injected with all the recorded wisdom for that exact domain *before* it generates a single line of code.
+
+### Step 5: Code & Commit
+
+As you write code, change files, and switch branches, ComCan's Git hooks will silently rebuild `.comcan/CURRENT_STATE.md` in the background. The AI will always know exactly what branch it is on and what the latest commits accomplished.
+
+### Step 6: Autonomous Agent Skills (Auto-Learn)
+
+ComCan requires absolutely zero manual upkeep once initialized. 
+
+When you run `comcan init`, it natively generates instruction files for your AI agents:
+1. `.cursorrules` and `.cursor/rules/comcan.mdc` (For Cursor users)
+2. `.agents/skills/comcan/SKILL.md` (For Antigravity users)
+
+These files explicitly instruct your AI to **Autonomously run the `comcan learn` terminal command** after it completes a complex coding task or bug fix. The AI will read your codebase, infer the architectural rules itself, and update the JSONL ledgers in the background entirely on its own!
+
+#### How to trigger in Cursor:
+Cursor natively discovers `comcan.mdc` in the `.cursor/rules/` folder. You do not need to do anything. Simply ask Cursor to fix a bug in the Chat or Composer, and watch it organically launch the terminal and run `comcan learn` when it finishes writing the code.
+
+#### How to trigger in Antigravity:
+Antigravity natively discovers `SKILL.md` in the `.agents/skills/comcan/` folder. When you are pair programming with Antigravity, it will read this skill folder at startup. It will autonomously execute `run_command("comcan query")` before it writes code, and `run_command("comcan learn")` after you approve its changes.
 
 ### Monitor State
 

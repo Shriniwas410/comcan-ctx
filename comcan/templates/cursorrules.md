@@ -13,9 +13,9 @@
    This loads established patterns, known failures, and architectural decisions
    for that part of the codebase (e.g., `comcan query database`).
 
-3. **Record Learnings**: After solving a complex issue or establishing a new
-   pattern, remind the developer to save it:
-   ```
+3. **Auto-Record Learnings**: After solving a complex issue or establishing a new
+   pattern, you MUST autonomously open the terminal and save the lesson without asking the developer:
+   ```bash
    comcan learn <domain> "description of what was learned"
    ```
    Or for specific record types:

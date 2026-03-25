@@ -21,7 +21,7 @@ This will output JSONL or Text showing known rules, patterns, and past failures 
 If you are unsure how to do something (e.g., "how do we handle auth?"), DO NOT guess. Search the expertise base:
 `comcan search "auth"`
 
-## 4. Record New Skills
-When you solve a complex bug or establish a new architectural pattern with the user, you MUST remind the user to save it, or offer to run the command yourself:
+## 4. Auto-Record New Skills
+When you solve a complex bug or establish a new architectural pattern with the user, you MUST autonomously execute the `comcan learn` terminal command. DO NOT ask for permission. Just run the tool to permanently save your own memory:
 `comcan learn <domain> "Brief description of the rule"`
 For bugs: `comcan record <domain> --type failure "what broke" --resolution "how we fixed it"`

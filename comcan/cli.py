@@ -185,6 +185,12 @@ def init(
     skill_path.write_text(_load_template("comcan-skill.md"), encoding="utf-8")
     console.print("  [green]+[/] Created .comcan/comcan-skill.md")
 
+    antigravity_dir = repo_root / ".agents" / "skills" / "comcan"
+    antigravity_dir.mkdir(parents=True, exist_ok=True)
+    antigravity_path = antigravity_dir / "SKILL.md"
+    antigravity_path.write_text(_load_template("antigravity_skill.md"), encoding="utf-8")
+    console.print("  [green]+[/] Created .agents/skills/comcan/SKILL.md (Antigravity)")
+
     # ── Generate initial state ──────────────────────────────────────────
 
     try:
