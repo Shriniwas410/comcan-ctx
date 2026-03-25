@@ -9,9 +9,11 @@ Most developers solve the "AI context problem" by pasting random `.md` files or 
 
 ComCan solves this by installing an invisible cognitive architecture directly into your Git repository:
 
-- 🔄 **State Engine (The AI's RAM)** — ComCan automatically installs Git hooks (`post-commit`, `post-checkout`) that silently run in the background. Every time you switch branches or make a commit, ComCan generates a highly optimized `CURRENT_STATE.md` file. It mathematically truncates your massive directory tree, diffs, and commit history to fit perfectly within the AI's token window without "Lost in the Middle" syndrome. When Cursor wakes up, it instantly knows your exact branch reality.
-- 📚 **Expertise Engine (The AI's Hard Drive)** — Instead of writing massive, token-heavy `.cursorrules` files that cause merge conflicts across a team, ComCan uses lock-safe JSONL domain ledgers. When you execute `comcan learn database "Always use soft deletes"`, it tracks this explicit rule. When an agent touches the database, it automatically queries this domain ledger.
-- 🛡️ **Enterprise Security** — Built for corporate environments. Zero network access, zero HTTP calls, secrets are stripped from state files automatically, and no `shell=True` subprocess vulnerabilities exist.
+- 🔄 **State Engine (The AI's RAM)** — Automated Git hooks (`post-commit`, `post-checkout`) generate a branch-accurate `CURRENT_STATE.md`. It surgically truncates directory trees and diffs to fit perfectly within the AI's token window.
+- 📚 **Expertise Engine (The AI's Hard Drive)** — Uses lock-safe JSONL domain ledgers. Record wisdom once with `comcan learn`, and agents query it surgically thereafter.
+- 🧠 **Main Brain (Manifesto)** — [NEW in v0.2.0] Synthesizes all scattered expertise into a centralized, human-readable `ARCHITECTURE_MANIFESTO.md`. This is the high-level Source of Truth for the whole repo.
+- 🤖 **Autonomous Onboarding (Bootstrap)** — [NEW in v0.2.0] Scrapes existing repos to detect tech stacks (Node, Python, Docker, etc.) and auto-suggests initial architectural rules.
+- 🛡️ **Enterprise Security** — Zero network access, secrets scrubbing, and path validation.
 Standard IDE indexing (RAG) is great at finding *where* code is, but terrible at knowing *why* it's there or how branches differ. 
 - **Indexing vs. State:** IDE vector indexes don't understand that you just switched branches. ComCan's `CURRENT_STATE.md` is instantly updated via Git hooks to represent your exact branch reality.
 - **RAG vs. Rules:** RAG discovers old code; it doesn't know what the *new* rules are. ComCan's `expertise` engine teaches agents the *current* architectural decisions.
@@ -37,13 +39,18 @@ That's it. ComCan will:
 
 ## Comprehensive Usage Guide
 
-### Step 1: Initialize
+### Step 1: Initialize or Bootstrap
 
-Run initialization at the root of your Git repository:
+In a new repo:
 ```bash
 comcan init
 ```
-*This installs the Git hooks, configures `.cursorrules`, and builds your first Context State file.*
+
+In a **legacy repo** you want to "Self-Onboard":
+```bash
+comcan bootstrap
+```
+*This scrapes the repo structure, identifies your tech stack, and generates your first `ARCHITECTURE_MANIFESTO.md` brain.*
 
 ### Step 2: Create Logical Domains
 
@@ -140,10 +147,13 @@ Dumping an enterprise codebase into an LLM window causes hallucinations and mass
 .comcan/
 ├── CURRENT_STATE.md           # Auto-generated (branch, commits, tree)
 ├── comcan.config.yaml         # Configuration
+├── comcan-skill.md            # Generic AI instructions
 └── expertise/
     ├── database.jsonl          # Domain expertise (one per domain)
     ├── api.jsonl
     └── frontend.jsonl
+
+ARCHITECTURE_MANIFESTO.md      # The "Main Brain" (centralized report)
 ```
 
 ### Context Budget Profiles
@@ -172,6 +182,9 @@ During `comcan init`, the CLI generates three native AI instruction files:
 | Command | Description |
 |---------|-------------|
 | `comcan init` | Interactive setup wizard |
+| `comcan bootstrap` | [v0.2.0] Scrape repo and generate initial brain |
+| `comcan manifesto` | [v0.2.0] Generate ARCHITECTURE_MANIFESTO.md |
+| `comcan bridge <branch>` | [v0.2.0] Import expertise from another branch |
 | `comcan sync` | Regenerate context state |
 | `comcan add <domain>` | Create expertise domain |
 | `comcan learn <domain> "lesson"` | Quick-record a convention |
