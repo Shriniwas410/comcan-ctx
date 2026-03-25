@@ -628,6 +628,7 @@ def bridge(
 @app.command()
 def bootstrap(
     yes: bool = typer.Option(False, "--yes", "-y", help="Skip confirmation"),
+    force: bool = typer.Option(False, "--force", "-f", help="Force re-scrape even if manifesto exists"),
 ) -> None:
     """Scrape the repository to autonomously build the initial 'Main Brain'."""
     repo_root = _get_repo_root_or_exit()
