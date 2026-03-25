@@ -10,7 +10,7 @@ import os
 from pathlib import Path
 from typing import TypedDict
 
-from comcan.file_parser import get_repo_tree
+from comcan.file_parser import generate_tree
 from comcan.expertise_manager import RECORD_TYPES
 
 
