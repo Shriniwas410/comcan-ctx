@@ -1,0 +1,4 @@
+#!/bin/sh
+# ComCan: auto-update context state after commit (runs in background)
+# This hook was installed by ComCan. Do not edit.
+comcan sync --quiet &

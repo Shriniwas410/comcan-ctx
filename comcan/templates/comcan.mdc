@@ -1,0 +1,27 @@
+---
+description: How to use the ComCan CLI for context and expertise
+globs: *
+---
+# ComCan Agent Skill
+
+You are operating in a repository powered by **ComCan** (Context Manager).
+ComCan provides you with a persistent, branch-aware "RAM" and "Hard Drive" so you don't have to guess project infrastructure.
+
+## 1. Always Read the RAM First
+Before writing code, you MUST read the current project state:
+`cat .comcan/CURRENT_STATE.md`
+This file tells you the current Git branch, recent commits, and a token-optimized directory tree.
+
+## 2. Load the Hard Drive (Expertise)
+If you are working on a specific domain (e.g., `frontend`, `database`, `api`), you MUST load the team's historical expertise before making architectural decisions:
+`comcan query <domain>`
+This will output JSONL or Text showing known rules, patterns, and past failures you must avoid.
+
+## 3. Search for Unknowns
+If you are unsure how to do something (e.g., "how do we handle auth?"), DO NOT guess. Search the expertise base:
+`comcan search "auth"`
+
+## 4. Record New Skills
+When you solve a complex bug or establish a new architectural pattern with the user, you MUST remind the user to save it, or offer to run the command yourself:
+`comcan learn <domain> "Brief description of the rule"`
+For bugs: `comcan record <domain> --type failure "what broke" --resolution "how we fixed it"`
