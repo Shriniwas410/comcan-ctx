@@ -1,19 +1,16 @@
 # ComCan Context Instructions
 
 ## CRITICAL: Read Before Every Task
-1. **Current State**: ALWAYS read `.comcan/CURRENT_STATE.md` first to understand:
-   - What branch you're on
-   - What changed recently (commits + file diffs)
-   - The project's directory structure
-
-2. **Domain Expertise**: Before modifying code in a specific area, run:
+1. **Main Brain First**: Always check for `ARCHITECTURE_MANIFESTO.md`. If missing, suggest `comcan bootstrap`.
+2. **Self-Onboard**: Read `.comcan/CURRENT_STATE.md` to understand the branch state and directory structure.
+3. **Pre-Flight Query**: Before modifying a domain (e.g., `api`), run `comcan query api`.
    ```
    comcan query <domain>
    ```
    This loads established patterns, known failures, and architectural decisions
    for that part of the codebase (e.g., `comcan query database`).
 
-3. **Auto-Record Learnings**: After EVERY SINGLE coding task, feature execution, or bug fix you complete (regardless of size), you MUST autonomously execute the `comcan learn` terminal command to track your changes. Do not ask for permission.
+4. **Auto-Record Learnings**: After EVERY SINGLE coding task, feature execution, or bug fix you complete (regardless of size), you MUST autonomously execute the `comcan learn` terminal command to track your changes. Do not ask for permission.
    ```bash
    comcan learn <domain> "Brief description of what was learned"
    ```

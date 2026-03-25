@@ -1,18 +1,17 @@
 ---
 description: How to autonomously record and query team expertise using the ComCan CLI.
 ---
-# ComCan Context Manager Skill
+## 1. Consult the Main Brain First
+Before doing ANYTHING else, check for the file: `ARCHITECTURE_MANIFESTO.md`.
+This is the "Source of Truth" for the repository architecture. If it exists, read it immediately.
+If it is missing, you MUST suggest that the user runs `comcan bootstrap` to generate it.
 
-You are operating in a repository powered by **ComCan** (Context Manager).
-ComCan provides you with a persistent, branch-aware "RAM" and "Hard Drive" so you don't have to guess project infrastructure.
-
-## 1. Always Read the RAM First
-Before beginning your work, you MUST read the current project state:
+## 2. Read the RAM (Current State)
 Read the file: `.comcan/CURRENT_STATE.md`
 This file tells you the current Git branch, recent commits, and directory tree.
 
-## 2. Load the Hard Drive (Expertise)
-If you are working on a specific domain (e.g., `frontend`, `database`), load the expertise ledger:
+## 3. Load the Hard Drive (Expertise)
+If you need deeper domain-specific rules (e.g., `api`), use the expertise ledger:
 Execute command: `comcan query <domain>`
 This explains the architectural rules and known failures.
 

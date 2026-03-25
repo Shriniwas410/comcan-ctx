@@ -29,7 +29,10 @@ from comcan.expertise_manager import (
     query_all,
     record,
     search,
+    generate_manifesto,
+    import_from_branch,
 )
+from comcan.bootstrap import scrape_repo
 from comcan.git_utils import (
     GitError,
     get_current_branch,
@@ -580,6 +583,109 @@ def version() -> None:
 
 
 # ── Entry point ─────────────────────────────────────────────────────────────
+
+@app.command()
+def manifesto(
+    output: str = typer.Option("ARCHITECTURE_MANIFESTO.md", "--output", "-o", help="Output file name"),
+) -> None:
+    """Generate a high-level human-readable Architecture Manifesto."""
+    repo_root = _get_repo_root_or_exit()
+    
+    content = generate_manifesto(repo_root)
+    output_path = repo_root / output
+    
+    output_path.write_text(content, encoding="utf-8")
+    console.print(f"[green]+[/] Architecture Manifesto generated -> {output}")
+    console.print(f"[dim]View it at: {output_path.absolute()}[/]")
+
+
+@app.command()
+def bridge(
+    branch: str = typer.Argument(help="The branch to pull expertise from"),
+) -> None:
+    """Import expertise records from another branch (Cross-Pollination)."""
+    repo_root = _get_repo_root_or_exit()
+    
+    console.print(f"[cyan]Teleporting wisdom from branch [bold]{branch}[/]...[/]")
+    
+    stats = import_from_branch(repo_root, branch)
+    
+    if not stats:
+        console.print("[dim]No new expertise found on that branch.[/]")
+        return
+        
+    table = Table(title="Imported Expertise")
+    table.add_column("Domain", style="cyan")
+    table.add_column("New Records", justify="right")
+    
+    for domain, count in stats.items():
+        table.add_row(domain, str(count))
+        
+    console.print(table)
+    console.print("[green]Brain expansion complete![/]")
+
+
+@app.command()
+def bootstrap(
+    yes: bool = typer.Option(False, "--yes", "-y", help="Skip confirmation"),
+) -> None:
+    """Scrape the repository to autonomously build the initial 'Main Brain'."""
+    repo_root = _get_repo_root_or_exit()
+    
+    console.print(Panel(
+        "[bold cyan]Repo Bootstrap Wizard[/]\n"
+        "Scraping repository structure to generate initial expertise...",
+        title="ComCan",
+    ))
+    
+    result = scrape_repo(repo_root, skip_if_exists=not force)
+    
+    if "Existing Manifesto Detected" in result['tech_stack']:
+        console.print("[yellow]![/] ARCHITECTURE_MANIFESTO.md already exists.")
+        console.print("    Skipping redundant scrape for efficiency.")
+        console.print("    Use [bold]comcan manifesto[/] to refresh it from expertise,")
+        console.print("    or use [bold]comcan bootstrap --force[/] to re-scrape.")
+        return
+    
+    console.print(f"[bold]Detected Tech Stack:[/] {', '.join(result['tech_stack'])}")
+    console.print(f"[bold]Suggested Domains:[/] {', '.join(result['domains'])}")
+    
+    if not result['suggested_records']:
+        console.print("[dim]No specific patterns detected, but ready to start learning![/]")
+    else:
+        console.print(f"\n[bold]Suggested Rules ({len(result['suggested_records'])}):[/]")
+        for rec in result['suggested_records']:
+            console.print(f"  - [{rec['domain']}] {rec['content']}")
+
+    if not yes:
+        confirm = typer.confirm("\nDo you want to apply these suggestions and generate the Manifesto?")
+        if not confirm:
+            console.print("[yellow]Bootstrap cancelled.[/]")
+            raise typer.Exit(0)
+
+    # Apply suggestions
+    for dom in result['domains']:
+        add_domain(repo_root, dom)
+        
+    for rec in result['suggested_records']:
+        record(
+            repo_root,
+            domain=rec['domain'],
+            record_type=rec['type'],
+            content=rec['content'],
+            author="comcan-bootstrap",
+        )
+        
+    # Generate manifesto
+    content = generate_manifesto(repo_root)
+    (repo_root / "ARCHITECTURE_MANIFESTO.md").write_text(content, encoding="utf-8")
+    
+    console.print("\n[green]Success![/] Main Brain bootstrapped.")
+    console.print("  [green]+[/] Created Domains")
+    console.print("  [green]+[/] Recorded Initial Expertise")
+    console.print("  [green]+[/] Generated ARCHITECTURE_MANIFESTO.md")
+    console.print("\n[cyan]Next step: Commit these changes to share the brain with the team![/]")
+
 
 if __name__ == "__main__":
     app()
