@@ -17,7 +17,7 @@ Execute command: `comcan query <domain>`
 This explains the architectural rules and known failures.
 
 ## 3. Auto-Record New Skills
-When you solve a complex bug or establish a new pattern with the user, you MUST autonomously execute the `comcan learn` command. DO NOT ask for permission. Just run the command to permanently save your own memory:
+After EVERY SINGLE coding task, feature implementation, or bug fix you complete (regardless of size), you MUST autonomously execute the `comcan learn` command. DO NOT ask for permission. Just run the command to efficiently track all changes:
 Execute command: `comcan learn <domain> "Brief description of the rule"`
 For bugs: `comcan record <domain> --type failure "what broke" --resolution "how we fixed it"`
 

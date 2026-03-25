@@ -22,7 +22,7 @@ If you are unsure how to do something (e.g., "how do we handle auth?"), DO NOT g
 `comcan search "auth"`
 
 ## 4. Auto-Record New Skills
-When you solve a complex bug or establish a new architectural pattern with the user, you MUST autonomously execute the `comcan learn` terminal command. DO NOT ask for permission. Just run the tool to permanently save your own memory:
+After EVERY SINGLE coding task, feature implementation, or bug fix you complete (regardless of size), you MUST autonomously execute the `comcan learn` terminal command. DO NOT ask for permission. Just run the tool to permanently track all your changes:
 `comcan learn <domain> "Brief description of the rule"`
 For bugs: `comcan record <domain> --type failure "what broke" --resolution "how we fixed it"`
 

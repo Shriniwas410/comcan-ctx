@@ -13,10 +13,9 @@
    This loads established patterns, known failures, and architectural decisions
    for that part of the codebase (e.g., `comcan query database`).
 
-3. **Auto-Record Learnings**: After solving a complex issue or establishing a new
-   pattern, you MUST autonomously open the terminal and save the lesson without asking the developer:
+3. **Auto-Record Learnings**: After EVERY SINGLE coding task, feature execution, or bug fix you complete (regardless of size), you MUST autonomously execute the `comcan learn` terminal command to track your changes. Do not ask for permission.
    ```bash
-   comcan learn <domain> "description of what was learned"
+   comcan learn <domain> "Brief description of what was learned"
    ```
    Or for specific record types:
    ```
